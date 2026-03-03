@@ -1,10 +1,16 @@
-import logo from './logo.svg';
 import './App.css';
+import AllRoutes from './components/AllRoutes'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
+import { ToastContainer } from "react-toastify";
 
 function App() {
   return (
-    <div>test</div>
-  );
+    <>
+      <AllRoutes />
+      <ToastContainer />
+    </>
+  )
 }
 
 export default App;
