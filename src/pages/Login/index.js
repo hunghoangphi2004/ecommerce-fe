@@ -1,8 +1,11 @@
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import { login } from "../../services/client/authService";
 import { notifySuccess, notifyError, notifyInfo } from "../../utils/toast";
-
+import loginImage from '../../assets/images/login.png';
+import CustomButton from "../../components/CustomButton";
+import "./Login.scss";
 
 function Login() {
     const navigate = useNavigate();
@@ -44,34 +47,70 @@ function Login() {
 
     return (
         <>
-            <div>
-                <h2>Login</h2>
+            <Helmet>
+                <title>Đăng nhập</title>
+                <meta name="description" content="Đăng nhập" />
+            </Helmet>
+            <div className="login">
+                <div className="login__image">
 
-                <form onSubmit={handleSubmit}>
-                    <div className="mb-3">
-                        <label htmlFor="email" className="form-label">Email: </label>
-                        <input type="email" name="email" className="form-control" id="email" value={email} onChange={handleChangeEmail} />
-                    </div>
+                </div>
+                <div className="login__content container">
+                    <div className="login__content-inner">
+                        <div className="login__left">
+                            <h1 className="login__title">
+                                Chào mừng quay trở lại
+                            </h1>
 
-                    <div className="mb-3">
-                        <label htmlFor="password" className="form-label">Mật khẩu: </label>
-                        <input ref={passwordRef} type="password" name="password" className="form-control" id="password" value={password} onChange={handleChangePassword} />
-                    </div>
+                            <p className="login__sub-title">Đăng nhập để tiếp tục khám phá <br />không gian âm nhạc</p>
 
-                    <div className="d-grid">
-                        <button type="submit" className="btn btn-primary" disabled={loading}>
-                            {loading ? (
-                                <>
-                                    <span className="spinner-border spinner-border-sm me-2"></span>
-                                    Đang xử lý...
-                                </>
-                            ) : (
-                                <> Đăng nhập </>
-                            )}
-                        </button>
+                            <form className="login__form" onSubmit={handleSubmit}>
+                                <div className="mb-3">
+                                    <input
+                                        type="email"
+                                        name="email"
+                                        className="form-control login__input"
+                                        value={email}
+                                        onChange={handleChangeEmail}
+                                        placeholder="Nhập email của bạn"
+                                    />
+                                </div>
+
+                                <div className="mb-3">
+                                    <input
+                                        ref={passwordRef}
+                                        type="password"
+                                        name="password"
+                                        className="form-control login__input"
+                                        placeholder="Nhập mật khẩu của bạn"
+                                        value={password}
+                                        onChange={handleChangePassword}
+                                    />
+                                </div>
+                                <div className="login__password">
+                                    <a href="/register" target="_self">Quên mật khẩu?</a>
+                                </div>
+
+                                <div className="d-grid d-flex mt-4">
+                                    <CustomButton type="submit"
+                                        className="custom__button"
+                                        loading={loading}
+                                    >Đăng nhập
+                                    </CustomButton>
+                                </div>
+                            </form>
+
+                            <div className="login__signup">
+                                Chưa có tài khoản? <a href="/register" target="_self">Đăng ký</a>
+                            </div>
+                        </div>
+
+                        <div className="login__right">
+                            <img src={loginImage} alt="login illustration" />
+                        </div>
                     </div>
-                </form>
-            </div>
+                </div >
+            </div >
         </>
     )
 }

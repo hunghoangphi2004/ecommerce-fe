@@ -1,0 +1,24 @@
+.product-section{
+    &__title{
+        text-align: center;
+
+        h4{
+            display: inline-block;
+            padding-top: 20px;
+            font-weight: 700;
+            position: relative;
+        }
+
+        h4::before{
+            content: "";
+            position: absolute;
+            height: 2px;
+            top: 0;
+            left: 50%;
+            display: block;
+            transform: translateX(-50%);
+            width: 60px;
+            background: red;
+        }
+    }
+}

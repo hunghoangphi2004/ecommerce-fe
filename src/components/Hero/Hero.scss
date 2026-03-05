@@ -1,0 +1,80 @@
+@use "../../assets/styles/variables"as *;
+
+.hero {
+    position: relative;
+    height: 808px;
+    overflow: hidden;
+    color: $text-color;
+
+    &__image {
+        position: absolute;
+        inset: 0;
+        background-image: url("../../assets//images/hero.png");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        transform: scaleX(-1);
+        right: -290px;
+    }
+
+    &__content {
+        position: absolute;
+        z-index: 2;
+        top: 190px;
+        left: 60px;
+        font-size: 30px;
+        max-width: 500px;
+    }
+
+    @media (max-width: 1200px) {
+        &__content {
+            max-width: 450px;
+            top: 170px;
+            left: 30px;
+        }
+    }
+
+    @media (max-width: 992px) {
+        &__content {
+            max-width: 450px;
+            top: 150px;
+            left: 30px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        &__content {}
+    }
+
+    @media (max-width: 576px) {
+        &__content {
+            font-size: 25px;
+            top: 150px;
+            left: auto;
+            margin: 0 auto;
+            text-align: center;
+            padding: 0 20px;
+            max-width: 90%;
+        }
+    }
+
+}
+
+@media (max-width: 1200px) {
+    .hero {
+        height: 700px;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero {
+        height: 500px;
+
+        &__content {
+            font-size: 20px;
+            max-width: 500px;
+        }
+    }
+
+
+}

@@ -1,0 +1,10 @@
+@use "../../assets/styles/variables"as *;
+
+.custom__button {
+        background-image: url("../../assets//images/hero.png");
+        border: 0;
+        color: $text-color;
+        padding: 10px 20px;
+        border-radius: 4px;
+        width: 200px;
+    }

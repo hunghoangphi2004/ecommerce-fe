@@ -1,0 +1,126 @@
+@use "../../assets/styles/variables"as *;
+
+.header {
+    &__inner {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: absolute;
+        z-index: 10;
+        color: $text-color;
+    }
+
+    &__nav {
+        ul {
+            display: flex;
+            gap: 30px;
+
+            li {}
+        }
+    }
+
+    &__nav-mobi {
+        display: none;
+    }
+
+    &__actions {
+        display: flex;
+        font-size: 30px;
+        gap: 20px;
+    }
+
+    &__action-single {
+        font-size: 15px;
+        gap: 20px;
+    }
+
+    &__user {
+        display: flex;
+        align-items: center;
+        position: relative;
+        cursor: pointer;
+    }
+
+    &__dropdown {
+        position: absolute;
+        top: 120%;
+        right: 0;
+        background: $primary-color;
+        border-radius: 12px;
+        min-width: 120px;
+        padding: 8px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        animation: fadeDown 0.2s ease;
+
+        a,button {
+            font-size: 14px;
+            padding: 10px 14px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            border: 0;
+            text-align: left;
+            background: $primary-color;
+
+            &:hover {
+                background: #8b90dc;
+            }
+        }
+    }
+
+    @media (max-width: 1200px) {
+        &__nav {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            padding: 100px 0;
+
+            ul {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            &.active {
+                display: block;
+
+                li{
+                    
+                }
+            }
+        }
+
+        &__actions {
+            display: none;
+        }
+
+        &__nav-mobi {
+            display: inline-block;
+        }
+    }
+
+    @media (max-width: 576px) {
+        &__logo {
+            width: 180px;
+        }
+    }
+}
+
+@keyframes fadeDown {
+    from {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
