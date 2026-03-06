@@ -1,9 +1,10 @@
-import { Children } from "react"
-import LayoutDefault from "../layouts/DefaultLayout"
-import Login from "../pages/Login"
-import Register from "../pages/Register"
-import Home from "../pages/Home"
-import About from "../pages/About"
+import LayoutDefault from "../layouts/DefaultLayout";
+import PrivateRoutes from "../components/PrivateRoutes";
+import Login from "../pages/Login";
+import Register from "../pages/Register";
+import Home from "../pages/Home";
+import Profile from "../pages/Profile";
+
 
 export const routes = [
     {
@@ -23,9 +24,18 @@ export const routes = [
                 path: "/register",
                 element: <Register />
             },
+            // {
+            //     path: "*",
+            //     element: <Error404 />
+            // },
             {
-                path: "/about",
-                element: <About />
+                element: <PrivateRoutes />,
+                children: [
+                    {
+                        path: "/profile",
+                        element: <Profile />
+                    }
+                ]
             },
         ]
     },

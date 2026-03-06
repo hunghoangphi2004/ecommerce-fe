@@ -15,3 +15,12 @@ export const post = (path, body) => {
     })
 }
 
+export const get = (path, params) => {
+    const query = params
+        ? "?" + new URLSearchParams(params).toString()
+        : ""
+
+    return request(path + query, {
+        method: "GET"
+    })
+}
