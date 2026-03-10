@@ -2,14 +2,14 @@
 const API_URL = process.env.REACT_APP_API_URL;
 
 export const request = async (path, options = {}) => {
-    const tokenUser = localStorage.getItem("tokenUser");
+    const token = localStorage.getItem("token");
     const isFormData = options.body instanceof FormData;
 
     const headers = {
         "Accept": "application/json",
         ...(!isFormData && { "Content-type": "application/json" }),
         ...options.headers,
-        ...(tokenUser && { Authorization: `Bearer ${tokenUser}` })
+        ...(token && { Authorization: `Bearer ${token}` })
     }
 
     const response = await fetch(API_URL + path, {
@@ -18,9 +18,9 @@ export const request = async (path, options = {}) => {
     });
 
     const isAuthRoute =
-        path.includes("/auth/login") ||
-        path.includes("/auth/register") ||
-        path.includes("/auth/refresh");
+        path.includes("/admin/auth/login") ||
+        path.includes("/admin/auth/register") ||
+        path.includes("/admin/auth/refresh");
 
     if (response.status === 401 && !isAuthRoute) {
         return handle401(path, options);
@@ -44,13 +44,12 @@ let isRefreshing = false;
 let refreshPromise = null;
 
 const handle401 = async (path, options) => {
-    console.log("Xu ly 401")
     if (!isRefreshing) {
         isRefreshing = true;
 
         refreshPromise = refreshToken()
             .then((newToken) => {
-                localStorage.setItem("tokenUser", newToken);
+                localStorage.setItem("token", newToken);
                 isRefreshing = false;
                 return newToken;
             })
@@ -67,12 +66,11 @@ const handle401 = async (path, options) => {
 };
 
 const refreshToken = async () => {
-    console.log('Xu ly refresh')
-    const tokenUser = localStorage.getItem("tokenUser");
-    const response = await fetch(API_URL + "/api/auth/refresh", {
+    const token = localStorage.getItem("token");
+    const response = await fetch(API_URL + "/api/admin/auth/refresh", {
         method: "POST",
         headers: {
-            "Authorization": `Bearer ${tokenUser}`,
+            "Authorization": `Bearer ${token}`,
             "Accept": "application/json"
         }
     });

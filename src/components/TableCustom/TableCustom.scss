@@ -1,0 +1,24 @@
+.table-custom {
+
+    .ant-table-tbody>tr>td {
+        padding: 40px 16px !important;
+    }
+
+}
+
+.table-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 30px;
+
+    .ant-select {
+        cursor: pointer !important;
+    }
+
+    .table-left {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+    }
+}

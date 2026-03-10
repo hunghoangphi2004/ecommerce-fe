@@ -10,7 +10,6 @@ function Home() {
 
     const [latestProduct, setLatestProduct] = useState([]);
     useEffect(() => {
-        console.log("vao day")
         const getData = async () => {
             const response = await getHome();
             setLatestProduct(response.latestProduct)

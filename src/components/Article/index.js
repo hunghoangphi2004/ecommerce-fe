@@ -2,7 +2,6 @@ import "./Artical.scss";
 
 function Article(props) {
     const { title, articles } = props;
-    console.log(articles);
 
     return (
         <>

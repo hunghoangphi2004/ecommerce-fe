@@ -6,8 +6,6 @@ function Profile() {
     const [loading, setLoading] = useState(false);
     const user = JSON.parse(localStorage.getItem("user"));  
     const { name, email, avatar, phone } = user;
-    console.log(name, email, avatar, phone);
-
 
     return (
         <>

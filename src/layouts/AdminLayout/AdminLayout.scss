@@ -1,0 +1,67 @@
+@use "../../assets/styles/variables"as *;
+
+.admin-layout {
+    min-height: 100vh;
+
+    &__sider {
+        background: $sider-color;
+        padding: 20px;
+    }
+
+    &__header {
+        padding: 20px 50px;
+        background: $layout-color;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__content {
+        padding: 30px 50px 0 50px;
+        background: $layout-color;
+    }
+
+    .ant-menu {
+        background: transparent !important;
+        border: none;
+    }
+
+    .ant-menu-item-group-title {
+        color: #6b7280;
+        font-size: 12px;
+        font-weight: 600;
+        margin-top: 20px;
+    }
+
+    .ant-menu-item {
+        color: #e5e7eb;
+        border-radius: 10px;
+        margin: 6px 0;
+        height: 42px;
+        display: flex;
+        align-items: center;
+    }
+
+    .ant-menu-item:hover {
+        background: #1a1d24 !important;
+        color: white !important;
+    }
+
+    .ant-menu-item-selected {
+        background: #1f1f1f !important;
+        color: white !important;
+        border-left: 3px solid blue;
+    }
+
+    .ant-menu-item-selected::after {
+        display: none;
+    }
+
+    .ant-input-search{
+        width: 30%;
+    }
+
+    .ant-divider{
+        margin: 0;
+    }
+}
