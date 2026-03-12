@@ -4,27 +4,23 @@ import {
     InputNumber,
     Select,
     Upload,
+    Button,
+    Switch,
     Row,
     Col,
     Card,
-    Switch,
-    Button,
     Modal
 } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
-import "./Edit.scss";
 import { useState, useEffect } from "react";
-import { getProduct, updateProduct } from "../../../services/admin/productService";
-import { useParams } from "react-router-dom";
 import { getCategories } from "../../../services/admin/categoryService";
+import { createProduct } from "../../../services/admin/productService";
+import { notifySuccess, notifyError, notifyInfo } from "../../../utils/toast";
 
 const { TextArea } = Input;
 
-function Edit() {
-
-    const { id } = useParams();
+function CreateProduct() {
     const [form] = Form.useForm();
-
     const [categories, setCategories] = useState([]);
     const [previewOpen, setPreviewOpen] = useState(false);
     const [previewImage, setPreviewImage] = useState("");
@@ -36,42 +32,20 @@ function Edit() {
     };
 
     useEffect(() => {
-
         const getData = async () => {
 
             try {
-
-                const categoryResponse = await getCategories();
-                setCategories(categoryResponse.data);
-
-                const product = await getProduct(id);
-
-                form.setFieldsValue({
-                    ...product,
-                    thumbnail: [
-                        {
-                            uid: "-1",
-                            name: "thumbnail",
-                            status: "done",
-                            url: product.thumbnail
-                        }
-                    ]
-                });
-
-            } catch (error) {
-                console.log("ERROR:", error);
+                const response = await getCategories();
+                setCategories(response.data);
+            } finally {
             }
-
-        };
+        }
 
         getData();
-
-    }, [id, form]);
+    }, []);
 
     const onFinish = async (values) => {
-
         try {
-
             const formData = new FormData();
 
             formData.append("title", values.title);
@@ -88,26 +62,22 @@ function Edit() {
 
             if (values.thumbnail?.length) {
                 const file = values.thumbnail[0];
-
-                if (file.originFileObj) {
-                    formData.append("thumbnail", file.originFileObj);
-                }
+                formData.append("thumbnail", file.originFileObj || file);
             }
 
-            const response = await updateProduct(id, formData);
-
-            console.log(response);
+            const response = await createProduct(formData);
+            notifySuccess("Tạo sản phẩm thành công")
 
         } catch (error) {
-
+            notifySuccess("Có lỗi xảy khi tạo sản phẩm. Vui lòng thử lại.")
             console.log("ERROR:", error);
-
+            console.log("ERROR DATA:", error.data);
         }
-
     };
 
+
     return (
-        <Card title="Chỉnh sửa sản phẩm" style={{ maxWidth: 900, margin: "0 auto" }}>
+        <Card title="Thêm sản phẩm" style={{ maxWidth: 900, margin: "0 auto" }}>
             <Form
                 layout="vertical"
                 form={form}
@@ -124,52 +94,56 @@ function Edit() {
 
                     <Col span={12}>
                         <Form.Item label="Danh mục" name="category_id">
-                            <Select
-                                options={categories.map((item) => ({
-                                    label: item.title,
-                                    value: item.id
-                                }))}
-                            />
+                            <Select placeholder="Chọn danh mục" options={categories.map((item) => ({
+                                label: item.title,
+                                value: item.id
+                            }))} />
                         </Form.Item>
                     </Col>
 
                     <Col span={24}>
                         <Form.Item label="Mô tả" name="description">
-                            <TextArea rows={4} />
+                            <TextArea rows={4} placeholder="Nhập mô tả" />
                         </Form.Item>
                     </Col>
 
                     <Col span={12}>
                         <Form.Item label="Giá" name="price">
-                            <InputNumber style={{ width: "100%" }} />
+                            <InputNumber style={{ width: "100%" }} placeholder="Nhập giá" />
                         </Form.Item>
                     </Col>
 
                     <Col span={12}>
                         <Form.Item label="Giảm giá (%)" name="discount_percentage">
-                            <InputNumber style={{ width: "100%" }} min={0} max={100} />
+                            <InputNumber
+                                style={{ width: "100%" }}
+                                min={0}
+                                max={100}
+                                placeholder="Nhập % giảm giá"
+                            />
                         </Form.Item>
                     </Col>
 
                     <Col span={12}>
                         <Form.Item label="Số lượng" name="stock">
-                            <InputNumber style={{ width: "100%" }} />
+                            <InputNumber
+                                style={{ width: "100%" }}
+                                placeholder="Nhập số lượng"
+                            />
                         </Form.Item>
                     </Col>
 
                     <Col span={12}>
                         <Form.Item label="Vị trí" name="position">
-                            <InputNumber style={{ width: "100%" }} />
+                            <InputNumber
+                                style={{ width: "100%" }}
+                                placeholder="Nhập vị trí (Tự động tăng dần nếu không nhập)"
+                            />
                         </Form.Item>
                     </Col>
 
                     <Col span={12}>
-                        <Form.Item
-                            label="Ảnh thumbnail"
-                            name="thumbnail"
-                            valuePropName="fileList"
-                            getValueFromEvent={(e) => e?.fileList}
-                        >
+                        <Form.Item label="Ảnh thumbnail" name="thumbnail" valuePropName="fileList" getValueFromEvent={(e) => e?.fileList}>
                             <Upload
                                 listType="picture-card"
                                 maxCount={1}
@@ -183,7 +157,6 @@ function Edit() {
                             </Upload>
                         </Form.Item>
                     </Col>
-
                     <Modal
                         open={previewOpen}
                         footer={null}
@@ -205,18 +178,16 @@ function Edit() {
                             <Switch />
                         </Form.Item>
                     </Col>
-
                 </Row>
 
                 <Form.Item style={{ marginTop: 20 }}>
                     <Button type="primary" size="large" htmlType="submit">
-                        Cập nhật sản phẩm
+                        Lưu sản phẩm
                     </Button>
                 </Form.Item>
-
             </Form>
         </Card>
     );
 }
 
-export default Edit;
+export default CreateProduct;

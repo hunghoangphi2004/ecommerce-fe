@@ -9,6 +9,7 @@ import { useOutletContext } from "react-router-dom";
 import { useProduct } from "../../../hooks/useProduct";
 import { productColumns } from "../../../constants/productColumns";
 import { deleteProduct, changeStatusProduct } from "../../../services/admin/productService";
+import { notifySuccess, notifyError, notifyInfo } from "../../../utils/toast";
 
 function Product() {
     const rowSelection = {
@@ -45,11 +46,12 @@ function Product() {
     const handleDeleteProduct = async (id) => {
         try {
             const response = await deleteProduct(id);
+            notifySuccess("Xoá sản phẩm thành công!");
             console.log(response);
             setRefresh(prev => prev + 1);
 
         } catch (error) {
-            console.log(error)
+            notifyError("Có lỗi xảy khi xoá sản phẩm. Vui lòng thử lại.")
         }
     }
 

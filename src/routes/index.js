@@ -6,9 +6,13 @@ import Register from "../pages/Register";
 import Home from "../pages/Home";
 import Profile from "../pages/Profile";
 import Product from "../pages/Admin/Product";
-import Create from "../pages/Admin/Create";
-import Edit from "../pages/Admin/Edit";
-import Detail from "../pages/Admin/Detail";
+import CreateProduct from "../pages/Admin/CreateProduct";
+import EditProduct from "../pages/Admin/EditProduct";
+import DetailProduct from "../pages/Admin/DetailProduct";
+import Category from "../pages/Admin/Category";
+import CreateCategory from "../pages/Admin/CreateCategory";
+import DetailCategory from "../pages/Admin/DetailCategory";
+import EditCategory from "../pages/Admin/EditCategory";
 
 export const routes = [
     {
@@ -59,21 +63,38 @@ export const routes = [
                     },
                     {
                         path: "create",
-                        element: <Create />
+                        element: <CreateProduct />
                     },
                     {
                         path: "detail/:id",
-                        element: <Detail />
+                        element: <DetailProduct />
                     },
                     {
                         path: "edit/:id",
-                        element: <Edit />
+                        element: <EditProduct />
                     },
                 ]
             },
             {
                 path: "categories",
-                element: <>Danh mục</>
+                children: [
+                    {
+                        index: true,
+                        element: <Category />
+                    },
+                    {
+                        path: "create",
+                        element: <CreateCategory />
+                    },
+                    {
+                        path: "detail/:id",
+                        element: <DetailCategory />
+                    },
+                    {
+                        path: "edit/:id",
+                        element: <EditCategory />
+                    },
+                ]
             }
         ]
     }
